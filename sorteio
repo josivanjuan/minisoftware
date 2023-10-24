@@ -1,0 +1,59 @@
+print("SOFTWARE: SORTEIO DE ORDEM DE PARTIDA V 1.0 - Por SO JOSIVAN")
+
+contador="S"
+while contador =="S":
+	
+
+
+    #armazenar a informação
+    percurso=input("Cadastre o Percurso:")
+    categoria=input("Cadastre a Categoria:")
+    nome1=input("Cadastre a Força Armada participante 1:")
+    nome2=input("Cadastre a Força Armada participante 2:")
+    nome3=input("Cadastre a Força Armada participante 3:")
+
+
+    #sortear entre numeros 1 e 3 aleatoriamente
+
+    import random #gera numeros aleatorios como num sorteio
+
+    sorteio = random.sample(range(1,4),3)
+
+      x= sorteio   
+
+    if x[0]==1:
+            primeiro="Primeiro " + nome1 
+    elif x[0]==2:
+            primeiro="Primeiro " + nome2 
+    elif x[0]==3:
+            primeiro="Primeiro " + nome3
+            
+
+    if  x[1]==1:
+        segundo="Segundo " + nome1
+    elif x[1]==2:
+        segundo="Segundo " + nome2
+    elif x[1]==3:
+        segundo="Segundo " + nome3
+        
+
+    if x[2]==1:
+        terceiro="Terceiro " + nome1
+    elif x[2]==2:
+        terceiro="Terceiro " + nome2
+    elif x[2]==3:
+        terceiro="Terceiro " + nome3
+
+
+    #mostrar a ordem de partida
+
+    print(percurso+ " - " + categoria+ " - " + str (primeiro)+ " - " + str (segundo) + " - " + str(terceiro))
+
+    
+# REPETIR SORTEIO
+#---------------------------------------------------while
+    print( "Deseja realizar novo sorteio? S ou N") 
+    contador = input()
+
+    
+print("PODEM CONFECCIONAR A ORDEM SECRETA! AMIZADE ATRAVÉS DO ESPORTE")
