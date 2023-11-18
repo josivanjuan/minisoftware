@@ -4,15 +4,13 @@ import time, datetime
 from PIL import Image, ImageTk
 import random
 from Csorteio import OrdemSecreta
-import getpass
-usuario = getpass.getuser()
 
 class Preto:  
   def __init__(self):
     time.sleep(0.3)
     self.preto= Toplevel()
     self.preto.title("Aplicativo - Sorteio da ordem Secreta - Completo")
-    self.preto.iconbitmap(f'C:/Users/{usuario}/sorteio/imagem/icone.ico')
+    self.preto.iconbitmap('C:/Users/josivanjuan/Documents/PYTHON/0_extras/janelalogin/imagem/icone.ico')
     self.preto.resizable(width=False, height=False)
     self.preto['bg'] = "#383838" 
     self.largura = 1000
@@ -25,34 +23,34 @@ class Preto:
   #definir a geometria centralizada na tela
     self.preto.geometry("%dx%d+%d+%d" % (self.largura, self.altura, self.posX, self.posy))
   #criação do fundo
-    self.img_fundo_preto= PhotoImage(master=self.preto, file=f"C:/Users/{usuario}/sorteio/imagem/telasorteiopreto.png")
-    self.img_botao_sortear= PhotoImage(master=self.preto, file=f"C:/Users/{usuario}/sorteio/imagem/botaosortear.png")
-    self.img_botao_apagar= PhotoImage(master=self.preto, file=f"C:/Users/{usuario}/sorteio/imagem/apagar.png")
-    self.img_botao_sair= PhotoImage(master=self.preto, file=f"C:/Users/{usuario}/sorteio/imagem/botaosair.png")
+    self.img_fundo_preto= PhotoImage(master=self.preto, file="C:/Users/josivanjuan/Documents/PYTHON/0_extras/janelalogin/imagem/telasorteiopreto.png")
+    self.img_botao_sortear= PhotoImage(master=self.preto, file="C:/Users/josivanjuan/Documents/PYTHON/0_extras/janelalogin/imagem/botaosortear.png")
+    self.img_botao_apagar= PhotoImage(master=self.preto, file="C:/Users/josivanjuan/Documents/PYTHON/0_extras/janelalogin/imagem/apagar.png")
+    self.img_botao_sair= PhotoImage(master=self.preto, file="C:/Users/josivanjuan/Documents/PYTHON/0_extras/janelalogin/imagem/botaosair.png")
    
   #criação de label
     self.lab_fundo_entrada= Label(self.preto, image=self.img_fundo_preto)
     self.lab_fundo_entrada.pack()
 
-    self.bt_sortear= Button(self.preto, bd=0.5, image=self.img_botao_sortear, command= self.realizarsorteio1)
+    self.bt_sortear= Button(self.preto, bd=0.5, image=self.img_botao_sortear, command= self.realizarsorteio1, cursor="hand2")
     self.bt_sortear.place(width=64, height=64, x=120, y=108)
-    self.bt_sortear= Button(self.preto, bd=0.5, image=self.img_botao_sortear, command= self.realizarsorteio2)
+    self.bt_sortear= Button(self.preto, bd=0.5, image=self.img_botao_sortear, command= self.realizarsorteio2, cursor="hand2")
     self.bt_sortear.place(width=64, height=64, x=230, y=108)
-    self.bt_sortear= Button(self.preto, bd=0.5, image=self.img_botao_sortear, command= self.realizarsorteio3)
+    self.bt_sortear= Button(self.preto, bd=0.5, image=self.img_botao_sortear, command= self.realizarsorteio3, cursor="hand2")
     self.bt_sortear.place(width=64, height=64, x=340, y=108)
-    self.bt_sortear= Button(self.preto, bd=0.5, image=self.img_botao_sortear, command= self.realizarsorteio4)
+    self.bt_sortear= Button(self.preto, bd=0.5, image=self.img_botao_sortear, command= self.realizarsorteio4, cursor="hand2")
     self.bt_sortear.place(width=64, height=64, x=450, y=108)
-    self.bt_sortear= Button(self.preto, bd=0.5, image=self.img_botao_sortear, command= self.realizarsorteio5)
+    self.bt_sortear= Button(self.preto, bd=0.5, image=self.img_botao_sortear, command= self.realizarsorteio5, cursor="hand2")
     self.bt_sortear.place(width=64, height=64, x=560, y=108)
-    self.bt_sortear= Button(self.preto, bd=0.5, image=self.img_botao_sortear, command= self.realizarsorteio6)
+    self.bt_sortear= Button(self.preto, bd=0.5, image=self.img_botao_sortear, command= self.realizarsorteio6, cursor="hand2")
     self.bt_sortear.place(width=64, height=64, x=670, y=108)
-    self.bt_sortear= Button(self.preto, bd=0.5, image=self.img_botao_sortear, command= self.realizarsorteio7)
+    self.bt_sortear= Button(self.preto, bd=0.5, image=self.img_botao_sortear, command= self.realizarsorteio7, cursor="hand2")
     self.bt_sortear.place(width=64, height=64, x=780, y=108)
-    self.bt_sortear= Button(self.preto, bd=0.5, image=self.img_botao_sortear, command= self.realizarsorteio8)
+    self.bt_sortear= Button(self.preto, bd=0.5, image=self.img_botao_sortear, command= self.realizarsorteio8, cursor="hand2")
     self.bt_sortear.place(width=64, height=64, x=890, y=108)
-    self.bt_apagar= Button(self.preto, bd=0.5, image=self.img_botao_apagar, command=self.apagartudo)
+    self.bt_apagar= Button(self.preto, bd=0.5, image=self.img_botao_apagar, command=self.apagartudo, cursor="hand2")
     self.bt_apagar.place(width=40, height=40, x=890, y=20)
-    self.bt_sair= Button(self.preto, bd=0.5, image=self.img_botao_sair, command=self.preto.destroy)
+    self.bt_sair= Button(self.preto, bd=0.5, image=self.img_botao_sair, command=self.preto.destroy, cursor="hand2")
     self.bt_sair.place(width=40, height=40, x=940, y=20)
 
 #caixa escolher dia
