@@ -9,6 +9,8 @@ import Cmagenta
 import Cpreto
 from tkinter import ttk
 import time, datetime
+import getpass
+usuario = getpass.getuser()
 
 class Principal:
   #def __init__(self, root):
@@ -17,7 +19,7 @@ class Principal:
     time.sleep(0.3)
     self.root= Toplevel()
     self.root.title("Aplicativo - Sorteio da ordem Secreta ")
-    self.root.iconbitmap('C:/Users/josivanjuan/Documents/PYTHON/0_extras/janelalogin/imagem/icone.ico')
+    self.root.iconbitmap(f"C:/Users/{usuario}/sorteio/imagem/icone.ico")
     self.root.resizable(width=False, height=False)
     self.root['bg'] = "#383838" 
     self.largura = 1100
@@ -30,9 +32,9 @@ class Principal:
   #definir a geometria centralizada na tela
     self.root.geometry("%dx%d+%d+%d" % (self.largura, self.altura, self.posX, self.posy))
   #criação do fundo
-    self.img_fundo_master1= PhotoImage(master=self.root, file="C:/Users/josivanjuan/Documents/PYTHON/0_extras/janelalogin/imagem/telaprincipal.png")
-    self.img_botao_1a8= PhotoImage(master=self.root, file="C:/Users/josivanjuan/Documents/PYTHON/0_extras/janelalogin/imagem/botao1a8.png")
-    self.img_botao_1a5= PhotoImage(master=self.root, file="C:/Users/josivanjuan/Documents/PYTHON/0_extras/janelalogin/imagem/botao1a5.png")
+    self.img_fundo_master1= PhotoImage(master=self.root, file=f"C:/Users/{usuario}/sorteio/imagem/telaprincipal.png")
+    self.img_botao_1a8= PhotoImage(master=self.root, file=f"C:/Users/{usuario}/sorteio/imagem/botao1a8.png")
+    self.img_botao_1a5= PhotoImage(master=self.root, file=f"C:/Users/{usuario}/sorteio/imagem/botao1a5.png")
   #criação de label
     self.lab_fundo_entrada= Label(self.root, image=self.img_fundo_master1)
     self.lab_fundo_entrada.pack()

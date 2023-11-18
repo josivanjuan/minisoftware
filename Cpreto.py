@@ -4,13 +4,15 @@ import time, datetime
 from PIL import Image, ImageTk
 import random
 from Csorteio import OrdemSecreta
+import getpass
+usuario = getpass.getuser()
 
 class Preto:  
   def __init__(self):
     time.sleep(0.3)
     self.preto= Toplevel()
     self.preto.title("Aplicativo - Sorteio da ordem Secreta - Completo")
-    self.preto.iconbitmap('C:/Users/josivanjuan/Documents/PYTHON/0_extras/janelalogin/imagem/icone.ico')
+    self.preto.iconbitmap(f'C:/Users/{usuario}/sorteio/imagem/icone.ico')
     self.preto.resizable(width=False, height=False)
     self.preto['bg'] = "#383838" 
     self.largura = 1000
@@ -23,10 +25,10 @@ class Preto:
   #definir a geometria centralizada na tela
     self.preto.geometry("%dx%d+%d+%d" % (self.largura, self.altura, self.posX, self.posy))
   #criação do fundo
-    self.img_fundo_preto= PhotoImage(master=self.preto, file="C:/Users/josivanjuan/Documents/PYTHON/0_extras/janelalogin/imagem/telasorteiopreto.png")
-    self.img_botao_sortear= PhotoImage(master=self.preto, file="C:/Users/josivanjuan/Documents/PYTHON/0_extras/janelalogin/imagem/botaosortear.png")
-    self.img_botao_apagar= PhotoImage(master=self.preto, file="C:/Users/josivanjuan/Documents/PYTHON/0_extras/janelalogin/imagem/apagar.png")
-    self.img_botao_sair= PhotoImage(master=self.preto, file="C:/Users/josivanjuan/Documents/PYTHON/0_extras/janelalogin/imagem/botaosair.png")
+    self.img_fundo_preto= PhotoImage(master=self.preto, file=f"C:/Users/{usuario}/sorteio/imagem/telasorteiopreto.png")
+    self.img_botao_sortear= PhotoImage(master=self.preto, file=f"C:/Users/{usuario}/sorteio/imagem/botaosortear.png")
+    self.img_botao_apagar= PhotoImage(master=self.preto, file=f"C:/Users/{usuario}/sorteio/imagem/apagar.png")
+    self.img_botao_sair= PhotoImage(master=self.preto, file=f"C:/Users/{usuario}/sorteio/imagem/botaosair.png")
    
   #criação de label
     self.lab_fundo_entrada= Label(self.preto, image=self.img_fundo_preto)

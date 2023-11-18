@@ -4,7 +4,9 @@ import time
 import tkinter as tk
 from tkinter import ttk
 import Cprincipal
-
+import getpass
+usuario = getpass.getuser()
+#local= f"C:/Users/{usuario}/sorteio/imagem/"
 
 #configuração da janela MASTER
     #root= Tk()
@@ -15,7 +17,7 @@ def abrir_jan_principal():
 root= Tk()    
 
 root.title("Orientação - Sorteio da ordem Secreta")
-root.iconbitmap('C:/Users/josivanjuan/Documents/PYTHON/0_extras/janelalogin/imagem/icone.ico')
+root.iconbitmap(f"C:/Users/{usuario}/sorteio/imagem/icone.ico")
 root.resizable(width=False, height=False)
 root['bg'] = "#383838"
 largura = 490
@@ -28,8 +30,8 @@ posy=altura_screen/2 - altura/2
   #definir a geometria centralizada na tela
 root.geometry("%dx%d+%d+%d" % (largura, altura, posX, posy))
     #importar imagens
-img_fundo_entrada= PhotoImage(master=root, file="C:/Users/josivanjuan/Documents/PYTHON/0_extras/janelalogin/imagem/telaentrada.png")
-img_botao_entrada= PhotoImage(master=root, file="C:/Users/josivanjuan/Documents/PYTHON/0_extras/janelalogin/imagem/botaoentrar.png")
+img_fundo_entrada= PhotoImage(master=root, file=f"C:/Users/{usuario}/sorteio/imagem/telaentrada.png")
+img_botao_entrada= PhotoImage(master=root, file=f"C:/Users/{usuario}/sorteio/imagem/botaoentrar.png")
 #criação de label
 lab_fundo_entrada= Label(root, image=img_fundo_entrada)
 lab_fundo_entrada.pack()

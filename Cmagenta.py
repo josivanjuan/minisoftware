@@ -4,13 +4,15 @@ import time, datetime
 from PIL import Image, ImageTk
 import random
 from Csorteio import OrdemSecreta
+import getpass
+usuario = getpass.getuser()
 
 class Magenta:  
   def __init__(self):
     time.sleep(0.3)
     self.magenta= Toplevel()
     self.magenta.title("Aplicativo - Sorteio da ordem Secreta - Simplificado")
-    self.magenta.iconbitmap('C:/Users/josivanjuan/Documents/PYTHON/0_extras/janelalogin/imagem/icone.ico')
+    self.magenta.iconbitmap(f"C:/Users/{usuario}/sorteio/imagem/icone.ico")
     self.magenta.resizable(width=False, height=False)
     self.magenta['bg'] = "#383838" 
     self.largura = 700
@@ -23,10 +25,10 @@ class Magenta:
   #definir a geometria centralizada na tela
     self.magenta.geometry("%dx%d+%d+%d" % (self.largura, self.altura, self.posX, self.posy))
   #criação do fundo
-    self.img_fundo_magenta= PhotoImage(master=self.magenta, file="C:/Users/josivanjuan/Documents/PYTHON/0_extras/janelalogin/imagem/telasorteiomagenta.png")
-    self.img_botao_sortear= PhotoImage(master=self.magenta, file="C:/Users/josivanjuan/Documents/PYTHON/0_extras/janelalogin/imagem/botaosortear.png")
-    self.img_botao_apagar= PhotoImage(master=self.magenta, file="C:/Users/josivanjuan/Documents/PYTHON/0_extras/janelalogin/imagem/apagar.png")
-    self.img_botao_sair= PhotoImage(master=self.magenta, file="C:/Users/josivanjuan/Documents/PYTHON/0_extras/janelalogin/imagem/botaosair.png")
+    self.img_fundo_magenta= PhotoImage(master=self.magenta, file=f"C:/Users/{usuario}/sorteio/imagem/telasorteiomagenta.png")
+    self.img_botao_sortear= PhotoImage(master=self.magenta, file=f"C:/Users/{usuario}/sorteio/imagem/botaosortear.png")
+    self.img_botao_apagar= PhotoImage(master=self.magenta, file=f"C:/Users/{usuario}/sorteio/imagem/apagar.png")
+    self.img_botao_sair= PhotoImage(master=self.magenta, file=f"C:/Users/{usuario}/sorteio/imagem/botaosair.png")
    
   #criação de label
     self.lab_fundo_entrada= Label(self.magenta, image=self.img_fundo_magenta)
