@@ -2,12 +2,13 @@ from tkinter import *
 import tkinter as tk
 import time, datetime
 from PIL import Image, ImageTk
+import os
 import getpass
 usuario = getpass.getuser()
-
-class JanelaSobre:
-    def __init__(self):#, root, titulo, largura, altura): #construtor que cria a funcionalidade incial da classe
-        time.sleep(0.4)
+#pastaapp= os.path.dirname(__file__)
+#class JanelaSobre:
+ #   def __init__(self):#, root, titulo, largura, altura): #construtor que cria a funcionalidade incial da classe
+  #      time.sleep(0.4)
         #self.janelasobre= Toplevel()
             #conteudo da janela
 class JanelaSobre:
@@ -15,7 +16,7 @@ class JanelaSobre:
         time.sleep(0.4)
         self.janelasobre= Toplevel()
         self.janelasobre.title("Detalhes sobre o aplicativo e desenvolvedor")
-        self.janelasobre.iconbitmap(f'C:/Users/{usuario}/sorteio/imagem/icone.ico')
+        self.janelasobre.iconbitmap(f'C:/Users/{usuario}/minisoftware/imagem/icone.ico')
         self.janelasobre.resizable(width=False, height=False)
         self.janelasobre['bg'] = "#383838"
         self.largura= 490
@@ -25,7 +26,7 @@ class JanelaSobre:
         self.posX=self.larguratela/2 - self.largura/2
         self.posy=self.alturatela/2 - self.altura/2
         self.janelasobre.geometry("%dx%d+%d+%d" % (self.largura, self.altura, self.posX, self.posy))
-        self.img_fundo_tiposorteio= PhotoImage(master=self.janelasobre, file=f"C:/Users/{usuario}/sorteio/imagem/topsobre.png")
+        self.img_fundo_tiposorteio= PhotoImage(master=self.janelasobre, file=(f"C:/Users/{usuario}/minisoftware/imagem/topsobre.png"))
         self.lab_fundo_topsobre= Label(self.janelasobre, image=self.img_fundo_tiposorteio)
         self.lab_fundo_topsobre.pack()
         self.lab_fundo_mensagem= Label(self.janelasobre, font=('monospace', 9), text="Sugestões e relatos de panes:\n josivanjuan@gmail.com",bg="#ff751a", fg="#FFFFFF")
@@ -38,7 +39,7 @@ class JanelaSobre:
     def exibir_hora_atual(self):   
         self.hora_atual= datetime.datetime.now().strftime("%H:%M:%S")
         self.label_hora.config(text=f"Hora atual: {self.hora_atual}")
-        self.janelasobre.after(1000,self.exibir_hora_atual())
+        self.janelasobre.after(1000, self.exibir_hora_atual)
 
 
     

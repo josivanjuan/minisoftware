@@ -3,21 +3,20 @@ from tkinter import filedialog
 import time
 import tkinter as tk
 from tkinter import ttk
-import Cprincipal
+import Cpainelfull
+import os
+#pastaapp= os.path.dirname(__file__)
 import getpass
-usuario = getpass.getuser()
-#local= f"C:/Users/{usuario}/sorteio/imagem/"
+usuario= getpass.getuser()
 
-#configuração da janela MASTER
-    #root= Tk()
 def abrir_jan_principal():
-    #root.quit()
-    principal= Cprincipal.Principal()
+    principal= Cpainelfull.GeradorHorarios()
     
 root= Tk()    
 
-root.title("Orientação - Sorteio da ordem Secreta")
-root.iconbitmap(f"C:/Users/{usuario}/sorteio/imagem/icone.ico")
+root.title("Orientação - Sorteio da ordem de Partida")
+#root.iconbitmap(pastaapp +"\\imagem\\icone.ico" )   
+root.iconbitmap  (f'C:\\Users\\{usuario}\\minisoftware\\imagem\\icone.ico')
 root.resizable(width=False, height=False)
 root['bg'] = "#383838"
 largura = 490
@@ -30,8 +29,8 @@ posy=altura_screen/2 - altura/2
   #definir a geometria centralizada na tela
 root.geometry("%dx%d+%d+%d" % (largura, altura, posX, posy))
     #importar imagens
-img_fundo_entrada= PhotoImage(master=root, file=f"C:/Users/{usuario}/sorteio/imagem/telaentrada.png")
-img_botao_entrada= PhotoImage(master=root, file=f"C:/Users/{usuario}/sorteio/imagem/botaoentrar.png")
+img_fundo_entrada= PhotoImage(master=root, file= (f"C:\\Users\\{usuario}\\minisoftware\\imagem\\telaentrada.png"))
+img_botao_entrada= PhotoImage(master=root, file= (f"C:\\Users\\{usuario}\\minisoftware\\imagem\\botaoentrar.png"))
 #criação de label
 lab_fundo_entrada= Label(root, image=img_fundo_entrada)
 lab_fundo_entrada.pack()
@@ -44,39 +43,11 @@ bt_entrar.place(width=118, height=64, x=186, y=308)
 #executar mainloop
 #app=root
 root.mainloop()
-#\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-"""class Login:
-  def __init__(self, root):
-    self.root= root
-#configuração da janela MASTER
-    #root= Tk()
-    self.root.title("Orientação - Sorteio da ordem Secreta")
-    self.root.iconbitmap('0_extras/janelalogin/imagem/icone.ico')
-    self.root.resizable(width=False, height=False)
-    self.root['bg'] = "#383838"
-    self.largura = 490
-    self.altura = 560
-    self.largura_screen = root.winfo_screenwidth()
-    self.altura_screen = root.winfo_screenheight()
-  #definir a posição da janela
-    self.posX=self.largura_screen/2 - self.largura/2
-    self.posy=self.altura_screen/2 - self.altura/2
-  #definir a geometria centralizada na tela
-    self.root.geometry("%dx%d+%d+%d" % (self.largura, self.altura, self.posX, self.posy))
-    #importar imagens
-    self.img_fundo_entrada= PhotoImage(file="0_extras/janelalogin/imagem/telaentrada.png")
-    self.img_botao_entrada= PhotoImage(file="0_extras/janelalogin/imagem/botaoentrar.png")
-#criação de label
-    self.lab_fundo_entrada= Label(self.root, image=self.img_fundo_entrada)
-    self.lab_fundo_entrada.pack()
-#criação de caixas de entrada
-#criação de botões
-    self.bt_entrar= Button(self.root, bd=0, image=self.img_botao_entrada, command= self.abrir_jan_principal)
-    self.bt_entrar.place(width=118, height=64, x=186, y=308)
-  #variáveis globais
-  # funções
-  def abrir_jan_principal(self):
-    #self.root.destroy()
-    self.principal= Cprincipal.Principal()
-    #exec(open("0_extras/janelalogin/Cprincipal.py").read())"""
+#\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Ola vai uma dica para quem quer saber mais sobre PDF, todos trabalham com medidas tipográficas que é 1/72 ou seja, uma polegada dividido por 72 então cada 72 que você usar em suas medidas corresponde a 25,4mm (2,54cm) então uma folha A4 tem exatos 595 x 844 (que corresponde a 210 x 297mm respectivamente)
+"""
+PDF é 1/72 ou seja, uma polegada dividido por 72 então cada 72 que você usar em suas medidas 
+corresponde a 25,4mm (2,54cm) então uma folha A4 tem exatos 595 x 844 
+(que corresponde a 210 x 297mm respectivamente)
+Sendo assim, para colocar o título a 3cm da borda deve utilizar a medida de 85 
+(pois 3cm é igual a 30mm que é igual a 1,18 polegadas).
+A medida de 50 sugerida é equivalente a 0,7" que é igual a 18mm aproximadamente"""
