@@ -4,6 +4,9 @@ from tkinter import *
 from random import shuffle
 import random
 from tkinter import messagebox
+from tkinter import filedialog
+from PIL import Image, ImageTk
+from reportlab.pdfgen import canvas
 from PIL import Image, ImageTk
 import subprocess
 import time, datetime
@@ -26,6 +29,7 @@ class GeradorHorarios:
     def __init__(self):
         time.sleep(0.3)
         self.root = Toplevel()
+        self.canvas = tk.Canvas(self.root)
     #definir cabeçalho e tamanho da janela
         self.root.title("Aplicativo - Sorteio da ordem Secreta")
         self.root.iconbitmap(f'C:\\Users\\{usuario}\\minisoftware\\imagem\\icone.ico')
@@ -57,22 +61,19 @@ class GeradorHorarios:
         self.meumenu= Menu(self.root)
 #ARQUIVOadicionar menu dentro de um menu titulo
         self.fileMenu= Menu(self.meumenu,tearoff=0, background="#383838")
-        self.fileMenu.add_command(label="Abrir Pasta do Sistema", command=False)
-        self.fileMenu.add_command(label="Salvar PDF", command=False)
-        self.fileMenu.add_separator()
-        self.fileMenu.add_command(label="Sortear Atletas", command=False)
+        self.fileMenu.add_command(label="Abrir Pasta do Sistema", command=self.abrir_pasta_sistema)
         self.fileMenu.add_separator()
         self.fileMenu.add_command(label="Sair", command=self.root.destroy)
         self.meumenu.add_cascade(label="Sorteio", menu=self.fileMenu )
 #EDITARadicionar menu dentro de um menu titulo
         self.editMenu= Menu(self.meumenu, tearoff=0, background="#383838")
-        self.editMenu.add_command(label="Tipo de Sorteio", command= False)
+        self.editMenu.add_command(label="Manual do Sistema", command= self.abrir_manual)
         self.editMenu.add_command(label="Sobre", command= self.abrir_janela_sobre  )
         self.meumenu.add_cascade(label="Ajuda", menu=self.editMenu)
         self.root.config(menu=self.meumenu) 
 
 #CRIAÇÃO DE BOTÕES PARA EXECUTAR AS FUNÇÕES-----------------------------------------------------------
-########Criar botão para sorteio das 3 forças <<<<<<<<<<<<<<<<<<<<<<<<<<
+#Criar botão para sorteio das 3 forças <<<<<<<<<<<<<<<<<<<<<<<<<<
         self.botao_sorteio_feminino= tk.Button(self.root, bd=0.5, image=self.img_botao_sortear_feminino, command= self.sorteio_equipesf, cursor='hand2') 
         self.botao_sorteio_feminino.place(width=40, height=40, x=25, y=155)
         self.botao_sorteio_masculino= tk.Button(self.root, bd=0.5, image=self.img_botao_sortear_masculino, command= self.sorteio_equipesm, cursor='hand2')
@@ -99,6 +100,15 @@ class GeradorHorarios:
         # Criar o botão para gerar CSV
         self.botao_gerarcsv = tk.Button(self.root, bd=0.5, image=self.img_botao_csv, command=False, cursor="hand2")
         self.botao_gerarcsv.place(width=40, height=40, x=1080, y=42)
+
+#criação de strng var para o PDF
+        self.equipes_resultadof= tk.StringVar()
+        self.equipes_resultadom= tk.StringVar()
+        self.resultado_equipesf= tk.StringVar()
+        self.resultado_equipesm= tk.StringVar()
+        self.diap= tk.StringVar()
+        self.dia= tk.StringVar()
+        self.diab= tk.StringVar()
 #VARIAVEL E MENU PARA SELEÇÃO DE COMPETIÇÃO -------------------------- def menu suspenso COMPETIÇÃO
         # Variável para armazenar a opção selecionada
         self.selected_optionc = tk.StringVar()
@@ -106,15 +116,18 @@ class GeradorHorarios:
         self.options_listc = [
             "Competição", 
             "CAMORFA",
-            "EXAER",
+            "ESAER",
             "INTERAFA",
             "INTERNAS DO ITA",
             "LIMA MENDES",
             "MAER",
             "MAREXAER",
+            "MESTREX",
             "NAE", 
             "NAVAMAER", 
             "OCA",
+            "PAM BR",
+            "RACOAM"
         ] 
         # Criando o OptionMenu
         self.option_menu_varc = tk.StringVar(self.root)
@@ -200,12 +213,12 @@ class GeradorHorarios:
 #FUNÇÃO PARA SORTEAR / EMBARALHAR OS NOMES
     def sorteio_equipesf(self):
         # Obter nomes da caixa de texto 1
-        equipes = self.text_equipes.get("1.0", "end-1c").splitlines()#('\n')
-        equipes = [nome for nome in equipes if nome]  # Remover linhas em branco
+        equipe = self.text_equipes.get("1.0", "end-1c").splitlines()#('\n')
+        equipe = [nome for nome in equipe if nome]  # Remover linhas em branco
         # Embaralhar os nomes
-        shuffle(equipes)
+        shuffle(equipe)
         # Mostrar nomes embaralhadosna caixa de texto
-        self.resultado_equipesf = '\n'.join(equipes)
+        self.resultado_equipesf = '\n'.join(equipe)
         self.equipes_resultadof.delete("1.0", tk.END)
         self.equipes_resultadof.insert(tk.END, self.resultado_equipesf)
         return self.resultado_equipesf
@@ -279,50 +292,82 @@ class GeradorHorarios:
         self.caixa_texto2.insert("1.0", "\n".join(self.linhas_ordenadas))
 #FUNÇÃO PARA APAGAR LISTA DE SORTEIO DE NOMES
     def apagarlista(self):
-        self.caixa_texto2.delete("1.0", "end")
-        self.text_nomes.delete("1.0", "end")
+        self.msg= messagebox.askokcancel("Já Salvou o PDF?", "Tem certeza de que deseja apagar a lista de partida e todo o sorteio?")
+        if self.msg:
+            self.caixa_texto2.delete("1.0", "end")
+            self.text_nomes.delete("1.0", "end")
+            self.text_resultado.delete("1.0", "end")
+            self.equipes_resultadom.delete("1.0", "end")
+            self.equipes_resultadof.delete("1.0", "end")
+            self.option_menu_varc.set(self.options_listc[0])
+            self.option_menu_varp.set(self.options_listp[0])
+            self.option_menu_var.set(self.options_list[0])
+        else:
+            None
     def apagarnomes(self):
         self.text_nomes.delete("1.0", "end")
 #FUNÇÃO PARA GERAR O RESULTADO EM ARQUIVO DE PDF NA TELA
     def pdfResultadofile(self):
-        self.texto = self.linhas_ordenadas
-        self.buffer = BytesIO()
-        self.pdf = canvas.Canvas(self.buffer, pagesize=A4)
-        self.pdf.setFont("Helvetica-Bold", 12) #titulo
-        self.pdf.drawString(470, 820, "Lista de Partida")
-        self.pdf.rect(20,815,550, 1, fill=True, stroke=False)
-#CRIAR IMPRESSÃO PARA MOSTRAR A ORDEM DO SORTEIO DAS 3 FORÇAS
-        self.pdf.setFont("Helvetica-Bold", 10) #sorteio feminino
-        #self.pdf.drawString(100, 800, "Feminino" )
-        self.pdf.drawString(100, 800, f"Feminino: {self.resultado_equipesf}")
-        self.pdf.setFont("Helvetica-Bold", 10) #sorteio masculino
-        self.pdf.drawString(100, 788, f"Masculino: {self.resultado_equipesm}")
-        self.pdf.setFont("Helvetica-Bold", 10) #competição
-        self.pdf.drawString(100, 776, self.diab )
-        self.pdf.setFont("Helvetica-Bold", 10) #etapa
-        self.pdf.drawString(100, 764, self.dia )
-        self.pdf.setFont("Helvetica-Bold", 10) #percurso
-        self.pdf.drawString(100, 752, self.diap )
-        #rodapé %d de %B de %Y
-        hora= datetime.now().strftime("%d/%b/%Y às %H:%M:%S")
-        self.pdf.rect(20,20,550, 1, fill=True, stroke=False)
-        self.pdf.setFont("Helvetica-Bold", 6) #rodapé
-        self.pdf.drawString(355, 15, "APP: Sorteio da Ordem Secreta - Lista gerada em: " + hora )
-        self.y = 730
-        for linha in self.texto:
-            self.pdf.drawString (100, self.y, linha  )
-            self.y -= 12
-        self.pdf.save()
-        self.buffer.seek(0)
-        #criar função para salvar o arquivo PDF
-        #gerar o arquivo na tela
-        with open("listadepartida.pdf", "wb") as f:
-            f.write(self.buffer.read())
-        webbrowser.open("listadepartida.pdf")
+        self.msg= messagebox.askokcancel("Conferir informação", "Todos os campos foram preenchidos? Deseja Prosseguir?")
+        
+        if self.msg:      
 
-"""
+            self.texto = self.linhas_ordenadas
+            self.buffer = BytesIO()
+            self.pdf = canvas.Canvas(self.buffer, pagesize=A4)
+            self.pdf.setFont("Helvetica-Bold", 12) #titulo
+            self.pdf.drawString(470, 820, "Lista de Partida")
+            self.pdf.drawImage(f"C:\\Users\\{usuario}\\minisoftware\\imagem\\orienteering.png", 430,815, width=20, height=20 )
+            self.pdf.rect(20,810,550, 1, fill=True, stroke=False)
+    #CRIAR IMPRESSÃO PARA MOSTRAR A ORDEM DO SORTEIO DAS 3 FORÇAS
+            self.pdf.setFont("Helvetica-Bold", 10) #sorteio feminino
+            #self.pdf.drawString(100, 800, "Feminino" )
+            self.pdf.drawString(100, 800, f"Feminino: {self.resultado_equipesf}")
+            self.pdf.setFont("Helvetica-Bold", 10) #sorteio masculino
+            self.pdf.drawString(100, 788, f"Masculino: {self.resultado_equipesm}")
+            self.pdf.setFont("Helvetica-Bold", 10) #competição
+            self.pdf.drawString(100, 776, f"{self.diab}")
+            self.pdf.setFont("Helvetica-Bold", 10) #etapa
+            self.pdf.drawString(100, 764, f"{self.dia}" )
+            self.pdf.setFont("Helvetica-Bold", 10) #percurso
+            self.pdf.drawString(100, 752, f"{self.diap}" )
+            #imagens
+            self.logo1 = f"C:\\Users\\{usuario}\\minisoftware\\logo\\logo1.png"
+            self.logo2 = f"C:\\Users\\{usuario}\\minisoftware\\logo\\logo2.png"
+            self.logo3 = f"C:\\Users\\{usuario}\\minisoftware\\logo\\logo3.png"
+            self.logo4 = f"C:\\Users\\{usuario}\\minisoftware\\logo\\logo4.png"
+            self.pdf.drawImage(self.logo1, 310,815, width=20, height=20 )
+            self.pdf.drawImage(self.logo2, 340,815, width=20, height=20 )
+            self.pdf.drawImage(self.logo3, 370,815, width=20, height=20 )
+            self.pdf.drawImage(self.logo4, 400,815, width=20, height=20 )
+                       #rodapé %d de %B de %Y
+            hora= datetime.now().strftime("%d/%b/%Y às %H:%M:%S")
+            self.pdf.rect(20,20,550, 1, fill=True, stroke=False)
+            self.pdf.setFont("Helvetica-Bold", 6) #rodapé
+            self.pdf.drawString(355, 10, "APP: Sorteio da Lista de Partida - gerada em: " + hora )
+            self.y = 730
+            for linha in self.texto:
+                self.pdf.drawString (100, self.y, linha  )
+                self.y -= 12
+            self.pdf.save()
+            self.buffer.seek(0)
+            #criar função para salvar o arquivo PDF
+            #gerar o arquivo na tela
+            with open("listadepartida.pdf", "wb") as f:
+                f.write(self.buffer.read())
+            webbrowser.open("listadepartida.pdf")
+        else:
+            None  
+    def abrir_pasta_sistema(self):
+    # Substitua 'Caminho/da/Pasta' pelo caminho da pasta desejada
+        self.caminho_pasta = f"C:\\Users\\{usuario}\\minisoftware\\"
+        os.startfile(self.caminho_pasta)
+    
+    def abrir_manual(self):
+        self.caminho_pasta = f"C:\\Users\\{usuario}\\minisoftware\\ajuda\\manual.pdf"
+        os.system(f'start {self.caminho_pasta}')
+
 #if __name__ == "__main__":
 root = tk.Tk()
 app = GeradorHorarios()
 root.mainloop()
-"""

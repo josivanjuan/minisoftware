@@ -1,0 +1,11 @@
+
+*.pyc
+*.doc
+*.toc
+*.zip
+*.pkg
+*.pyz
+*.txt
+*.html
+*.pdf
+Cmagenta.py
